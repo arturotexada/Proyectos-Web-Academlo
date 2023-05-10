@@ -2,6 +2,8 @@ const express = require('express');
 const db = require('./utils/database');
 const Users = require("./models/users.models")
 require('./models/users.models');
+
+const PORT = process.env.PORT || 8000;
 //const Countries = require('./models/countries.models');
 //const { log } = require('console');
 // creamos una instancia de express llamada app
@@ -112,7 +114,7 @@ app.put('/users/:id', async (req, res) => {
 })
 
 app.listen(8000, () => {
-    console.log("Servidor escuchando en puerto 8000")
+    console.log(`Servidor escuchando en puerto ${PORT}`)
 });
 
 console.log(process.env);
