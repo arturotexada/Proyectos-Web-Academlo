@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('./utils/database');
 const Users = require("./models/users.models")
 require('./models/users.models');
+require('dotenv').config();
 
 const PORT = process.env.PORT || 8000;
 //const Countries = require('./models/countries.models');
@@ -21,6 +22,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Servidor corriendo...')
 });
+
 
 app.post('/users', async (req, res) => {
     try {
@@ -48,12 +50,13 @@ app.post('/users', async (req, res) => {
 
     }
 }) */
-
-/* app.get('/users/:id', async (req, res) => {
+// get user by id
+// SELECT * FROM users WHERE id=3
+app.get('/users/:id', async (req, res) => {
     try {
         // para recuperar el parámetro ID
         //  * request param
-        //  es un objeto  {id: 23}
+        //  es un objeto  {id: 23}  -> localhost:8000/users/id/4
         const { id } = req.params;
         console.log(req.params)
 
@@ -67,7 +70,7 @@ app.post('/users', async (req, res) => {
         res.status(400).json(error);
 
     }
-}); */
+});
 
 app.get('/users/email/:email', async (req, res) => {
     try {
@@ -104,16 +107,18 @@ app.put('/users/:id', async (req, res) => {
         // 1.actualizan nombre
         // 2.actualizan apellido
         // 3.actualizan los dos
-        await Users.update({ firstname, lastname }, {
-            where: { id }
-        });
+        await Users.update(
+            { firstname, lastname },
+            {
+                where: { id }
+            });
         res.status(204).send();
     } catch (error) {
         res.status(400).json(error)
     }
 })
 
-app.listen(8000, () => {
+app.listen(PORT, () => {
     console.log(`Servidor escuchando en puerto ${PORT}`)
 });
 
