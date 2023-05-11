@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./utils/database');
 const Users = require("./models/users.models")
+const cors = require('cors');
 require('./models/users.models');
 require('dotenv').config();
 
@@ -18,6 +19,7 @@ db.sync()
     .catch((error) => console.log(error));
 
 const app = express();
+app.use(cors);
 app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Servidor corriendo...')
